@@ -1,0 +1,62 @@
+<header>
+  <div>
+    <h1>{{ title() }}</h1>
+    <p class="sub">
+      /api/{{ schema() }}/{{ table() }}
+      @if (state().data) {
+        · {{ total() }} righe
+      }
+    </p>
+  </div>
+  <button type="button" (click)="refresh()" [disabled]="state().loading">Aggiorna</button>
+</header>
+
+@if (state().error; as error) {
+  <p class="message error">{{ error }}</p>
+} @else if (!state().data) {
+  <p class="message">Caricamento…</p>
+} @else if (rows().length === 0) {
+  <p class="message">Nessun dato in questa tabella.</p>
+} @else {
+  <div class="grid" [class.loading]="state().loading">
+    <table>
+      <thead>
+        <tr>
+          @for (column of columns(); track column) {
+            <th scope="col">{{ header(column) }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track $index) {
+          <tr>
+            @for (column of columns(); track column) {
+              <td [class.num]="isNumber(row[column])" [title]="row[column] ?? ''">{{ format(row[column]) }}</td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <span>{{ range().first }}–{{ range().last }} di {{ total() }}</span>
+
+    <label>
+      Righe per pagina
+      <select #size [value]="pageSize()" (change)="setPageSize(size.value)">
+        @for (option of pageSizes; track option) {
+          <option [value]="option" [selected]="option === pageSize()">{{ option }}</option>
+        }
+      </select>
+    </label>
+
+    <div class="pager">
+      <button type="button" (click)="goTo(1)" [disabled]="page() === 1" aria-label="Prima pagina">«</button>
+      <button type="button" (click)="goTo(page() - 1)" [disabled]="page() === 1" aria-label="Pagina precedente">‹</button>
+      <span>Pagina {{ page() }} di {{ pageCount() }}</span>
+      <button type="button" (click)="goTo(page() + 1)" [disabled]="page() >= pageCount()" aria-label="Pagina successiva">›</button>
+      <button type="button" (click)="goTo(pageCount())" [disabled]="page() >= pageCount()" aria-label="Ultima pagina">»</button>
+    </div>
+  </footer>
+}

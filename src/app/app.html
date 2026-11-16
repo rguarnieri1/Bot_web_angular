@@ -1,0 +1,24 @@
+<aside class="sidebar">
+  <a class="brand" routerLink="/">Bot – Dati</a>
+
+  <nav aria-label="Web api">
+    @if (loading()) {
+      <p class="note">Caricamento menu…</p>
+    } @else if (error()) {
+      <p class="note error">Web api non raggiungibile su http://localhost:5000.</p>
+    } @else {
+      @for (group of menu(); track group.label) {
+        <h2>{{ group.label }}</h2>
+        <ul>
+          @for (item of group.items; track item.label) {
+            <li><a [routerLink]="item.link" routerLinkActive="active">{{ item.label }}</a></li>
+          }
+        </ul>
+      }
+    }
+  </nav>
+</aside>
+
+<main>
+  <router-outlet />
+</main>
