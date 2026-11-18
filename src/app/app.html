@@ -7,13 +7,20 @@
     } @else if (error()) {
       <p class="note error">Web api non raggiungibile su http://localhost:5000.</p>
     } @else {
-      @for (group of menu(); track group.label) {
-        <h2>{{ group.label }}</h2>
-        <ul>
-          @for (item of group.items; track item.label) {
-            <li><a [routerLink]="item.link" routerLinkActive="active">{{ item.label }}</a></li>
+      @for (section of menu(); track section.label) {
+        <details class="section" [open]="isOpen(section)">
+          <summary>{{ section.label }}</summary>
+          @for (bot of section.bots; track bot.schema) {
+            <details class="bot" [open]="bot.schema === currentSchema()">
+              <summary>{{ bot.label }}</summary>
+              <ul>
+                @for (item of bot.items; track item.label) {
+                  <li><a [routerLink]="item.link" routerLinkActive="active">{{ item.label }}</a></li>
+                }
+              </ul>
+            </details>
           }
-        </ul>
+        </details>
       }
     }
   </nav>

@@ -20,13 +20,39 @@
   text-decoration: none;
 }
 
-h2 {
-  margin: 16px 10px 4px;
-  font-size: 0.72rem;
-  font-weight: 600;
+summary {
+  cursor: pointer;
+  user-select: none;
+  border-radius: 6px;
+}
+
+.section > summary {
+  margin: 8px 0 2px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+.bot {
+  margin-left: 8px;
+}
+
+.bot > summary {
+  padding: 5px 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+summary:hover {
+  background: var(--hover);
+}
+
+.bot ul {
+  margin-left: 10px;
 }
 
 ul {
