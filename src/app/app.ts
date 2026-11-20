@@ -16,7 +16,7 @@ interface MenuSection {
   bots: MenuBot[];
 }
 
-/** Sezione di menu di un bot: Crypto = bot 1-10, USA = bot 11 e successivi (11-13), il resto in "Altro". */
+/** Sezione di menu di un bot: Crypto = bot 1-10, USA = bot 11 e successivi (11-14), il resto in "Altro". */
 function sectionOf(schema: string): string {
   const n = Number(/^bot(\d+)$/i.exec(schema)?.[1]);
   if (!n) return 'Altro';
